@@ -1,16 +1,16 @@
-# This is a sample Python script.
+import requests as req
+from bs4 import BeautifulSoup as bs
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+my_url = 'http://books.toscrape.com/catalogue/1000-places-to-see-before-you-die_1/index.html'
+
+def scrapping():
+    response = req.get(url=my_url)
+    soup = bs(response.content, 'html.parser')
+
+    print(soup)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    scrapping()
