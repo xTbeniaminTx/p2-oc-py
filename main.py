@@ -75,9 +75,18 @@ def get_books_urls(url):
     books_urls = []
 
     for url in books_urls_bs:
-        books_urls.append(url['href'].replace('../../../', 'http://books.toscrape.com/catalogue/'))
+        books_urls.append('http://books.toscrape.com/' + url['href'])
 
     return books_urls
+
+
+def write_to_csv(books_details, csv_filename):
+    headers = books_details[0].keys()
+
+    with open(csv_filename, mode="w") as csv_file:
+        dict_writer = csv.DictWriter(csv_file, fieldnames=headers)
+        dict_writer.writeheader()
+        dict_writer.writerows(books_details)
 
 
 if __name__ == '__main__':
@@ -85,4 +94,10 @@ if __name__ == '__main__':
 
     books_urls = get_books_urls(base_url)
 
-    print(len(books_urls))
+    books = []
+
+    for book_url in books_urls:
+        print(book_url)
+        books.append(parse_book_details(book_url))
+
+    write_to_csv(books, "data1.csv")
