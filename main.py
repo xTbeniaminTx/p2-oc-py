@@ -66,7 +66,23 @@ def parse_book_details(url):
     }
 
 
+def get_books_urls(url):
+    response = req.get(url)
+    soup = bs(response.content, 'html.parser')
+
+    books_urls_bs = soup.find_all("a", attrs={"title": True})  # all a with a title attribute
+
+    books_urls = []
+
+    for url in books_urls_bs:
+        books_urls.append(url['href'].replace('../../../', 'http://books.toscrape.com/catalogue/'))
+
+    return books_urls
+
+
 if __name__ == '__main__':
-    book_url = "http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html"
-    book_details = parse_book_details(book_url)
-    print(book_details)
+    base_url = "http://books.toscrape.com/index.html"
+
+    books_urls = get_books_urls(base_url)
+
+    print(len(books_urls))
