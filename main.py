@@ -75,7 +75,9 @@ def get_books_urls(url):
     books_urls = []
 
     for url in books_urls_bs:
-        books_urls.append('http://books.toscrape.com/' + url['href'])
+        if "../" in url['href']:
+            url_cleaned = url['href'].replace("../../", "")
+        books_urls.append('http://books.toscrape.com/catalogue/' + url_cleaned)
 
     return books_urls
 
@@ -92,12 +94,19 @@ def write_to_csv(books_details, csv_filename):
 if __name__ == '__main__':
     base_url = "http://books.toscrape.com/index.html"
 
-    books_urls = get_books_urls(base_url)
+    books_urls = []
 
     books = []
+    pagination_url = "http://books.toscrape.com/catalogue/category/books_1/"
+
+    for i in range(1, 51):
+        page_url = f"{pagination_url}page-{i}.html"
+        books_urls.extend(get_books_urls(page_url))
+
+    print(len(books_urls))
 
     for book_url in books_urls:
         print(book_url)
         books.append(parse_book_details(book_url))
 
-    write_to_csv(books, "data1.csv")
+    write_to_csv(books, "all_books.csv")
