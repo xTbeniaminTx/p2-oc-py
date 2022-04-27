@@ -82,6 +82,21 @@ def get_books_urls(url):
     return books_urls
 
 
+# `save_images()` | A method to save images.
+def save_images(books):
+    for book in books:
+        image_name = book['image_url'].split('/')[-1]
+
+        # Here, we are downloading the image from the website, books.toscrape.com.
+        image_content = req.get(book['image_url']).content
+
+        # The 'b' in mode is used to specify that the file is a binary.
+        # Images are usually stored as binary.
+        # That is why we added mode = 'wb', "Write the file as binary"
+        with open(f'images/{image_name}', mode='wb') as image_file:
+            image_file.write(image_content)
+
+
 def write_to_csv(books_details, csv_filename):
     headers = books_details[0].keys()
 
@@ -103,10 +118,8 @@ if __name__ == '__main__':
         page_url = f"{pagination_url}page-{i}.html"
         books_urls.extend(get_books_urls(page_url))
 
-    print(len(books_urls))
-
     for book_url in books_urls:
-        print(book_url)
         books.append(parse_book_details(book_url))
 
     write_to_csv(books, "all_books.csv")
+    save_images(books)
