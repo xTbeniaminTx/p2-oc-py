@@ -19,13 +19,13 @@ In the terminal, navigate to the desired folder.
     $ python -m venv venv 
     $ source venv/bin/activate
     
-### Installer les paquets requis
+### Install required packages
     $ pip install -r requirements.txt
 
-### Lancer le programme
+### Start the program
     $ python main.py
 
-
+----------------------------------------------
 ## Windows :
 In Windows Powershell, navigate to the desired folder.
 ### Project Recovery(Clone from GitHub)
