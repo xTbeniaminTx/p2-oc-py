@@ -7,7 +7,7 @@ import csv
 def save_images(books):
     for book in books:
         # specifing the image name
-        image_name = book['title'].replace(':', ' -') + '.jpg'
+        image_name = book["title"].replace(":", " -").replace("/", " ") + ".jpg"
 
         # specifing the image path
         image_path = f'./output/images/{book["category"]}/{image_name}'
@@ -16,12 +16,12 @@ def save_images(books):
         Path(f'./output/images/{book["category"]}/').mkdir(parents=True, exist_ok=True)
 
         # Here, we are downloading the image from the website, books.toscrape.com.
-        image_content = req.get(book['image_url']).content
+        image_content = req.get(book["image_url"]).content
 
         # The 'b' in mode is used to specify that the file is a binary.
         # Images are usually stored as binary.
         # That is why we added mode = 'wb', "Write the file as binary"
-        with open(image_path, mode='wb') as image_file:
+        with open(image_path, mode="wb") as image_file:
             image_file.write(image_content)
 
 
