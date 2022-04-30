@@ -1,10 +1,9 @@
 # Importing Packages, Prequisites
-
 import csv
 import re
 import requests as req
 from bs4 import BeautifulSoup as bs
-import pandas as pd
+from pathlib import Path
 
 
 # Extracting details from the book page
@@ -70,13 +69,13 @@ def get_books_urls(url):
     response = req.get(url)
     soup = bs(response.content, 'html.parser')
 
-    books_urls_bs = soup.find_all("a", attrs={"title": True})  # all a with a title attribute
+    # all anchors with a title attribute
+    books_urls_bs = soup.find_all("a", attrs={"title": True})
 
     books_urls = []
 
     for url in books_urls_bs:
-        if "../" in url['href']:
-            url_cleaned = url['href'].replace("../../", "")
+        url_cleaned = url['href'].replace("../", "")
         books_urls.append('http://books.toscrape.com/catalogue/' + url_cleaned)
 
     return books_urls
@@ -85,7 +84,14 @@ def get_books_urls(url):
 # `save_images()` | A method to save images.
 def save_images(books):
     for book in books:
-        image_name = book['image_url'].split('/')[-1]
+        # specifing the image name
+        image_name = book['title'].replace(':', ' -') + '.jpg'
+
+        # specifing the image path
+        image_path = f'images/{book["category"]}/{image_name}'
+
+        # creating the category folder for the image
+        Path(f'./images/{book["category"]}/').mkdir(parents=True, exist_ok=True)
 
         # Here, we are downloading the image from the website, books.toscrape.com.
         image_content = req.get(book['image_url']).content
@@ -93,7 +99,7 @@ def save_images(books):
         # The 'b' in mode is used to specify that the file is a binary.
         # Images are usually stored as binary.
         # That is why we added mode = 'wb', "Write the file as binary"
-        with open(f'images/{image_name}', mode='wb') as image_file:
+        with open(image_path, mode='wb') as image_file:
             image_file.write(image_content)
 
 
@@ -114,7 +120,7 @@ if __name__ == '__main__':
     books = []
     pagination_url = "http://books.toscrape.com/catalogue/category/books_1/"
 
-    for i in range(1, 51):
+    for i in range(1, 5):
         page_url = f"{pagination_url}page-{i}.html"
         books_urls.extend(get_books_urls(page_url))
 
