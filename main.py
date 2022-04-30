@@ -12,7 +12,7 @@ if __name__ == "__main__":
     categories_url = get_categories_url()
     no_categories = 5
     # For every category URL
-    for category_url in categories_url:
+    for category_url in categories_url[:no_categories]:
         books = []
 
         # 1. Getting all the books urls from all the pages

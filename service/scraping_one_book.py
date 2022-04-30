@@ -3,8 +3,14 @@ from bs4 import BeautifulSoup as bs
 import re
 
 
-# Extracting details from the book page
 def parse_book_details(url):
+    """
+    Extracting details from the book page
+
+    :param url: str, Product (Book) URL
+
+    :return: dict, containing single book details
+    """
     response = req.get(url)
     soup = bs(response.content, "html.parser")
 

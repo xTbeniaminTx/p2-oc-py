@@ -5,6 +5,13 @@ import csv
 
 # `save_images()` | A method to save images.
 def save_images(books):
+    """
+    Extract all the images of books and save it locally
+
+    :param books: list of dict, containing book details
+
+    :return: None
+    """
     for book in books:
         # specifing the image name
         image_name = book["title"].replace(":", " -").replace("/", " ") + ".jpg"
@@ -26,6 +33,14 @@ def save_images(books):
 
 
 def write_to_csv(books_details, csv_filename):
+    """
+    Save the details to CSV file
+
+    :param books_details: list of dict, containing book details
+    :param csv_filename: str, Name of the CSV File
+
+    :return: None
+    """
     headers = books_details[0].keys()
 
     with open(csv_filename, mode="w") as csv_file:

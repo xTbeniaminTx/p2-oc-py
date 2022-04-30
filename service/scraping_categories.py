@@ -5,8 +5,9 @@ import re
 
 def get_categories_url():
     """
+    Extract all the main categories URLs
 
-    :return:
+    :return: categories_url, List, containg all 50 categories URL
     """
     # Go to Homepage
     base_url = "http://books.toscrape.com/index.html"
@@ -28,6 +29,13 @@ def get_categories_url():
 
 
 def scrapping_categories_pagination(url):
+    """
+    Extract all the books' URL from a category page
+
+    :param url: str, Link to a category page
+
+    :return books_urls: list, contains all the books' URL from a category page
+    """
     # Go to the category page
     response = req.get(url)
     soup = bs(response.content, "html.parser")
