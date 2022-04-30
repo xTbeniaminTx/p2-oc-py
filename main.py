@@ -125,7 +125,12 @@ if __name__ == '__main__':
         books_urls.extend(get_books_urls(page_url))
 
     for book_url in books_urls:
+        print("Extracting from :", book_url)
         books.append(parse_book_details(book_url))
 
+    print("Writing books details to csv file")
     write_to_csv(books, "all_books.csv")
+    print("Saving images ...")
+
     save_images(books)
+    print("______________________________________________Finish___________________________________________________________")
