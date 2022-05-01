@@ -8,6 +8,9 @@ _Environement Dev: Ubuntu 20.04, Python 3.8, PyCharm IDE  ._
 
 ----------------------------------------------
 # Instruction 
+At root create the structure for writing csv and images:
+
+    $ mkdir output output/csv output/images
 ## MacOS and Linux :
 In the terminal, navigate to the desired folder.
 ### Project Recovery(Clone from GitHub)

@@ -8,7 +8,7 @@ from service.scraping_categories import (
 
 if __name__ == "__main__":
 
-    # Extracting all the main categories URLs
+    # Extracting all the main categories  50 URLs
     categories_url = get_categories_url()
     no_categories = 5
     # For every category URL
